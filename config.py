@@ -10,3 +10,12 @@ OPENID_PROVIDERS = [
     {'name': 'Flickr', 'url': 'http://www.flickr.com/<username>'},
     {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'}
 ]
+
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+# declare the path of our database file
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+
+# this is where we'll store SQLAlchemy-migrate data files
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
