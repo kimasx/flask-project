@@ -4,10 +4,10 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from app import app, db, lm, oid
 
 # import LoginForm class from forms.py
-from forms import LoginForm, EditForm, PostForm
+from forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post
 from datetime import datetime
-from config import POSTS_PER_PAGE
+from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS
 
 
 # loads a user from the database
@@ -23,7 +23,8 @@ def before_request():
 	if g.user.is_authenticated():
 		g.user.last_seen = datetime.utcnow()
 		db.session.add(g.user)
-		db.session.commit
+		db.session.commit()
+		g.search_form = SearchForm()
 
 
 # error handling
@@ -55,7 +56,6 @@ def index(page=1):
 
 
 
-
 @app.route('/login', methods=['GET', 'POST'])
 @oid.loginhandler # tells flask-openid that this is our login view function
 def login():
@@ -74,6 +74,7 @@ def login():
 		# triggers user auth. thru openid
 		return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
 	return render_template('login.html', title='Sign In', form=form, providers=app.config['OPENID_PROVIDERS'])
+
 
 # called when a user successfully logs in to the system
 @oid.after_login
@@ -177,6 +178,29 @@ def unfollow(nickname):
 	db.session.commit()
 	flash('You are no longer following ' + nickname)
 	return redirect(url_for('user', nickname=nickname)) 
+
+
+@app.route('/search', methods=['POST'])
+@login_required
+def search():
+	if not g.search_form.validate_on_submit():
+		return redirect(url_for('index'))
+	return redirect(url_for('search_results', query=g.search_form.search.data))
+
+
+# sends query into Whoosh
+@app.route('/search_results/<query>')
+@login_required
+def search_results(query):
+	results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+	return render_template('search_results.html', query=query, results=results)
+
+
+
+
+
+
+
 
 
 

@@ -31,3 +31,9 @@ ADMINS = ['you@example.com']
 
 # pagination
 POSTS_PER_PAGE = 3
+
+# configure WhooshAlchemy
+WHOOSH_BASE = os.path.join(basedir, 'search.db')
+
+# indicate # of search results that should be returned as maximum
+MAX_SEARCH_RESULTS = 50

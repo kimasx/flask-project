@@ -54,3 +54,8 @@
 2014-11-13 17:43:37,111 INFO: microblog startup [in /Users/sunkim/Development/flask-project/app/__init__.py:47]
 2014-11-14 09:45:00,776 INFO: microblog startup [in /Users/sunkim/Development/flask-project/app/__init__.py:47]
 2014-11-14 09:45:01,182 INFO: microblog startup [in /Users/sunkim/Development/flask-project/app/__init__.py:47]
+2014-11-14 11:59:28,673 INFO: microblog startup [in /Users/sunkim/Development/flask-project/app/__init__.py:47]
+2014-11-14 11:59:29,031 INFO: microblog startup [in /Users/sunkim/Development/flask-project/app/__init__.py:47]
+2014-11-14 14:08:39,884 INFO: microblog startup [in app/__init__.py:47]
+2014-11-14 15:07:53,373 INFO: microblog startup [in /Users/sunkim/Development/flask-project/app/__init__.py:47]
+2014-11-14 15:07:53,835 INFO: microblog startup [in /Users/sunkim/Development/flask-project/app/__init__.py:47]
